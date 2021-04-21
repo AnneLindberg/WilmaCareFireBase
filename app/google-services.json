@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "699996118717",
+    "project_id": "wilmacare-187bb",
+    "storage_bucket": "wilmacare-187bb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:699996118717:android:435aa80b8a63639826e1d4",
+        "android_client_info": {
+          "package_name": "com.example.wilmacare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "699996118717-3s3e7g5o81t77j7bh60m5haftloqauhg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0q3ijYuJOyhtDb81OaLC8LEKG6bmw4LY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "699996118717-3s3e7g5o81t77j7bh60m5haftloqauhg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:699996118717:android:d7425541e7de8c2e26e1d4",
+        "android_client_info": {
+          "package_name": "com.example.wilmacarefirebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "699996118717-3s3e7g5o81t77j7bh60m5haftloqauhg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0q3ijYuJOyhtDb81OaLC8LEKG6bmw4LY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "699996118717-3s3e7g5o81t77j7bh60m5haftloqauhg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
