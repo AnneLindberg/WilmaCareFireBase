@@ -8,23 +8,23 @@
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.example.wilmacarefirebase.ui.home.HomeFragment"
-        android:label="@string/title_home"
+        android:label="Profil"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.example.wilmacarefirebase.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
+        android:label="Opslagstavlen"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
         android:id="@+id/navigation_notifications"
         android:name="com.example.wilmacarefirebase.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
+        android:label="Kalender"
         tools:layout="@layout/fragment_notifications" />
     <fragment
         android:id="@+id/calenderFragment"
         android:name="com.example.wilmacarefirebase.CalenderFragment"
-        android:label="calender_fragment"
+        android:label="Beboer"
         tools:layout="@layout/calender_fragment" />
 </navigation>
