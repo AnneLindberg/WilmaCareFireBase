@@ -14,7 +14,9 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.wilmacarefirebase.R;
+import com.example.wilmacarefirebase.login.Login;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
     private EditText messageEditText;
@@ -35,5 +37,12 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
-    }}
+    }
+
+    public void logout(View view) {
+        FirebaseAuth.getInstance().signOut();
+        startActivity(new Intent(getApplicationContext(), Login.class));
+        finish();
+    }
+}
 

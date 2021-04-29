@@ -64,26 +64,19 @@ public class HomeFragment extends Fragment {
         firebaseFirestore = FirebaseFirestore.getInstance();
 
         userId = firebaseAuth.getCurrentUser().getUid();
+        FirebaseUser user = firebaseAuth.getCurrentUser();
 
-//        final DocumentReference documentReference = firebaseFirestore.collection("users").document(userId);
-//        documentReference.addSnapshotListener(getActivity(), (value, error) -> {
-//            if(value.exists()){
-//                phone.setText(value.getString("phone"));
-//                fullName.setText(value.getString("fullName"));
-//                email.setText(value.getString("email"));
-//
-//            }else {
-//                Log.d("tag", "onEvent: Document do not exists");
-//            }
-//        });
-        
+
+        //hvorfor får den kun fat i email?????? ser ud som om den godt kan finde email fra din cloud firestore. OBS kan også finde Uid, men ikke navn og telefon :(
+        //TODO: find ud af det homie
+
+            phone.setText(user.getDisplayName());
+            fullName.setText(user.getDisplayName());
+            email.setText(user.getEmail());
+
 
 
         return root;
 }
 
-    public void logOut(View view) {
-        FirebaseAuth.getInstance().signOut();
-        startActivity(new Intent(getActivity().getApplicationContext(), Login.class));
-    }
 }

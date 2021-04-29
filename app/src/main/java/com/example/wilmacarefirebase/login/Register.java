@@ -124,5 +124,13 @@ public class Register extends AppCompatActivity {
             });
 
         });
+
+        //TODO: ask Kasper why this is not working...
+        alreadyRegistered.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),Login.class));
+            }
+        });
     }
 }
