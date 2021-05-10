@@ -3,6 +3,8 @@
     package="com.example.wilmacarefirebase">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+
 
     <application
         android:name="androidx.multidex.MultiDexApplication"
@@ -14,8 +16,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.WilmaCareFireBase">
-        <activity android:name=".login.EditProfile"></activity>
-        <activity android:name=".login.Login"></activity>
+        <activity android:name=".login.EditProfile" />
+        <activity android:name=".ui.dashboard.AddPostFragment"/>
+        <activity android:name=".login.Login" />
+
         <activity android:name=".login.Register">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,7 +28,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".login.Authenticator" />
-        <activity android:name=".ui.MainActivity"></activity>
+        <activity android:name=".ui.MainActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

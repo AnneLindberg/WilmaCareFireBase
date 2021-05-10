@@ -1,90 +1,103 @@
 package com.example.wilmacarefirebase.ui.dashboard;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wilmacarefirebase.R;
-import com.example.wilmacarefirebase.data.DashboardPost;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.example.wilmacarefirebase.data.OnDataAdded;
+import com.example.wilmacarefirebase.models.DashboardPost;
 
-public class DashboardFragment extends Fragment {
+import java.util.ArrayList;
 
-    private DashboardViewModel dashboardViewModel;
-    private View DashBordFragmentView;
-    private RecyclerView myDashboardsList;
+import static android.app.Activity.RESULT_OK;
 
-    private DatabaseReference DashboardPostRequest, UsersRef, DashboardRef;
-    private FirebaseAuth mAuth;
-    private String currentUserID;
+public class DashboardFragment extends Fragment implements OnDataAdded {
+
+    public static final int ADD_POST_REQUEST = 1;
+    private static final String TAG = "DashboardFragment";
+    private ArrayList<DashboardPost> dashboardPostsList = new ArrayList<>();
+    private DashPostAdapter dashPostAdapter;
+    private DashboardViewModel viewModel;
+    private RecyclerView recyclerView;
+    private View root;
+    private Button buttonAddPost;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        dashboardViewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
-        DashBordFragmentView = inflater.inflate(R.layout.user_display_post, container, false);
+        viewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
+        root = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
-        DashboardPostRequest = FirebaseDatabase.getInstance().getReference().child("Dashboard Request");
-        mAuth = FirebaseAuth.getInstance();
-        currentUserID = mAuth.getCurrentUser().getUid();
-        myDashboardsList = DashBordFragmentView.findViewById(R.id.chat_requests_list);
-     //   myDashboardsList.setLayoutManager(new LinearLayoutManager(getContext()));
+        buttonAddPost = root.findViewById(R.id.addNewPost);
+        recyclerView = root.findViewById(R.id.recycler_view_dashboard);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
 
-        return DashBordFragmentView;
+        final DashPostAdapter adapter = new DashPostAdapter();
+        recyclerView.setAdapter(dashPostAdapter);
+
+        viewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
+        viewModel.init(DashboardFragment.this);
+        viewModel.getPost().observe(getViewLifecycleOwner(), new Observer<ArrayList<DashboardPost>>() {
+            @Override
+            public void onChanged(ArrayList<DashboardPost> dashboardPosts) {
+                dashPostAdapter.setPost(dashboardPosts);
+            }
+        });
+
+        buttonAddPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), AddPostFragment.class);
+                startActivityForResult(intent, ADD_POST_REQUEST);
+            }
+        });
+        return root;
+
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == ADD_POST_REQUEST || requestCode == RESULT_OK){
+            String username = data.getStringExtra(AddPostFragment.EXTRA_USERNAME);
+            String post = data.getStringExtra(AddPostFragment.EXTRA_DESCRIPTION);
+
+            DashboardPost p = new DashboardPost(username,post, null);
+        viewModel.insert(p);
+            Log.e("added note","added post to db");
+        }else {
+            Log.e("ERROR","Post not saved to db");
+        }
+    }
+
+    @Override
+    public void added() {
+        dashPostAdapter.notifyDataSetChanged();
+
+    }
+
 
     @Override
     public void onStart() {
         super.onStart();
 
-        FirebaseRecyclerOptions<DashboardPost> options = new FirebaseRecyclerOptions.Builder<DashboardPost>().setQuery(DashboardPostRequest.child(currentUserID), DashboardPost.class).build();
-        FirebaseRecyclerAdapter<DashboardPost, RequestViewHolder> adapter = new FirebaseRecyclerAdapter<DashboardPost, RequestViewHolder>(options) {
-            @Override
-            protected void onBindViewHolder(@NonNull RequestViewHolder requestViewHolder, int i, @NonNull DashboardPost dashboardPost) {
-        //    requestViewHolder.itemView.findViewById(R.id.request_accept_btn).setVisibility(View.VISIBLE);
-
-            final String list_userid = getRef(i).getKey();
-
-            DatabaseReference getTypeOfRef = getRef(i).child("request_type");
             }
 
-            @NonNull
-            @Override
-            public RequestViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-               View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_display_post, parent, false);
-               RequestViewHolder holder = new RequestViewHolder(view);
-               return holder;
-            }
-        };
     }
 
-    public static class  RequestViewHolder extends RecyclerView.ViewHolder{
 
-        TextView username, usermessage;
-        ImageView profileImage;
-        Button AcceptButton;
-
-        public RequestViewHolder(@NonNull View itemView) {
-            super(itemView);
-
-            username = itemView.findViewById(R.id.user_profile_name);
-            usermessage = itemView.findViewById(R.id.user_message);
-            profileImage = itemView.findViewById(R.id.users_profile_image);
-          //  AcceptButton = itemView.findViewById(R.id.request_accept_btn);
-
-        }
-    }
-}
