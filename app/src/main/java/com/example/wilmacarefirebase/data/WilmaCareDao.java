@@ -1,6 +1,5 @@
 package com.example.wilmacarefirebase.data;
 
-import android.app.Application;
 import android.content.Context;
 
 import androidx.lifecycle.MutableLiveData;
@@ -13,10 +12,10 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class WilmaCareDao {
 
-    private static WilmaCareDao instance;
     private MutableLiveData<DashboardPost> dashPostML;
     private FirebaseUser user;
     private FirebaseDatabase database;
+    private static WilmaCareDao instance;
 
 
     public WilmaCareDao() {
@@ -33,10 +32,6 @@ public class WilmaCareDao {
 
     }
 
-    public void getDashPostFB(String id){
-
-    }
-
     public static synchronized WilmaCareDao getInstance(Context context) {
         if (instance == null) {
             instance = null;
@@ -49,5 +44,9 @@ public class WilmaCareDao {
         DashboardPost post1 = dashPostML.getValue();
         post1.addPost(post);
         dashPostML.setValue(post1);
+    }
+
+    public MutableLiveData<DashboardPost> getDashPostFB() {
+        return dashPostML;
     }
 }

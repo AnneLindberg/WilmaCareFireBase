@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,19 +17,19 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wilmacarefirebase.R;
-import com.example.wilmacarefirebase.data.OnDataAdded;
 import com.example.wilmacarefirebase.models.DashboardPost;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
-public class DashboardFragment extends Fragment implements OnDataAdded {
+public class DashboardFragment extends Fragment {
 
     public static final int ADD_POST_REQUEST = 1;
     private static final String TAG = "DashboardFragment";
     private ArrayList<DashboardPost> dashboardPostsList = new ArrayList<>();
-    private DashPostAdapter dashPostAdapter;
+    private DashPostAdapter adapterPost;
     private DashboardViewModel viewModel;
     private RecyclerView recyclerView;
     private View root;
@@ -44,21 +43,28 @@ public class DashboardFragment extends Fragment implements OnDataAdded {
         buttonAddPost = root.findViewById(R.id.addNewPost);
         recyclerView = root.findViewById(R.id.recycler_view_dashboard);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.hasFixedSize();
 
+        List<DashboardPost> dashboardPostList= new ArrayList<>();
 
-        final DashPostAdapter adapter = new DashPostAdapter();
-        recyclerView.setAdapter(dashPostAdapter);
+        dashboardPostList.add(new DashboardPost("Anne", "hvordan går det med jer allesammen?","null"));
+        dashboardPostList.add(new DashboardPost("Anne", "safdsafdsaf går det med jer allesammen?","null"));
+        dashboardPostList.add(new DashboardPost("Anne", "hvorafdsafdsafdsdan går det med jer allesammen?","null"));
+        dashboardPostList.add(new DashboardPost("Anne", "hvordanafdsafdsaffsafdsafdsafdsafdsaf går det med jer allesammen?","null"));
+
+        adapterPost = new DashPostAdapter(dashboardPostList);
+        recyclerView.setAdapter(adapterPost);
 
         viewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
         viewModel.init(DashboardFragment.this);
-        viewModel.getPost().observe(getViewLifecycleOwner(), new Observer<ArrayList<DashboardPost>>() {
-            @Override
-            public void onChanged(ArrayList<DashboardPost> dashboardPosts) {
-                dashPostAdapter.setPost(dashboardPosts);
-            }
-        });
+//        viewModel.getPost().observe(getViewLifecycleOwner(), new Observer<ArrayList<DashboardPost>>() {
+//            @Override
+//            public void onChanged(ArrayList<DashboardPost> dashboardPosts) {
+//                dashPostAdapter.setPost(dashboardPosts);
+//            }
+//        });
 
-        buttonAddPost.setOnClickListener(new View.OnClickListener() {
+            buttonAddPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), AddPostFragment.class);
@@ -85,9 +91,8 @@ public class DashboardFragment extends Fragment implements OnDataAdded {
         }
     }
 
-    @Override
     public void added() {
-        dashPostAdapter.notifyDataSetChanged();
+        adapterPost.notifyDataSetChanged();
 
     }
 

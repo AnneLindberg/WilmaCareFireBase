@@ -18,11 +18,6 @@ public class DashboardPost {
         this.posts = new ArrayList<>();
     }
 
-    public DashboardPost() {
-    }
-
-
-
     public String getUsername() {
         return username;
     }

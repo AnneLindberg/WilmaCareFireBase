@@ -6,8 +6,6 @@ import androidx.lifecycle.ViewModel;
 import com.example.wilmacarefirebase.data.WilmaRepository;
 import com.example.wilmacarefirebase.models.DashboardPost;
 
-import java.util.ArrayList;
-
 public class AddPostViewModel extends ViewModel {
 
     private WilmaRepository repository;
@@ -16,7 +14,7 @@ public class AddPostViewModel extends ViewModel {
         repository = WilmaRepository.getInstance();
     }
 
-    public MutableLiveData<ArrayList<DashboardPost>> getPost(){
+    public MutableLiveData<DashboardPost> getPost(){
         return repository.getPost();
     }
 

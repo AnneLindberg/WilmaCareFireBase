@@ -1,5 +1,4 @@
 package com.example.wilmacarefirebase.ui.dashboard;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +16,11 @@ import java.util.List;
 public class DashPostAdapter extends RecyclerView.Adapter<DashPostAdapter.ViewHolder> {
 
 
-    private ArrayList<DashboardPost> dashboardPostArrayList;
-    private DashboardFragment context;
+    private List<DashboardPost> postItemList;
+
+    public DashPostAdapter(List<DashboardPost> postItemList) {
+        this.postItemList = postItemList;
+    }
 
 
     @NonNull
@@ -29,23 +31,24 @@ public class DashPostAdapter extends RecyclerView.Adapter<DashPostAdapter.ViewHo
         return new ViewHolder(view);
     }
 
+    //TODO: fiks så du kan få billeder ind gennem cloud
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.itemView.setTag(dashboardPostArrayList.get(position));
-        holder.user_image.setText(dashboardPostArrayList.get(position).getImage());
-        holder.username.setText(dashboardPostArrayList.get(position).getUsername());
-        holder.post.setText(dashboardPostArrayList.get(position).getMessage());
+        holder.itemView.setTag(postItemList.get(position));
+//      holder.user_image.setText(postItemList.get(position).getImage());
+        holder.username.setText(postItemList.get(position).getUsername());
+        holder.post.setText(postItemList.get(position).getMessage());
 
     }
 
     public void setPost(List<DashboardPost> notes) {
-        this.dashboardPostArrayList = (ArrayList<DashboardPost>) notes;
+        this.postItemList = (ArrayList<DashboardPost>) notes;
         notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        return dashboardPostArrayList.size();
+        return postItemList.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -55,9 +58,14 @@ public class DashPostAdapter extends RecyclerView.Adapter<DashPostAdapter.ViewHo
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            user_image = itemView.findViewById(R.id.users_profile_image);
+//            user_image = itemView.findViewById(R.id.users_profile_image);
             username = itemView.findViewById(R.id.user_profile_name);
             post = itemView.findViewById(R.id.user_message);
         }
+    }
+
+    public interface OnListItemClickListener
+    {
+        void onClick(int position);
     }
 }
