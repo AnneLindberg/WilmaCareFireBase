@@ -58,7 +58,7 @@ public class HomeFragment extends Fragment {
         phone = root.findViewById(R.id.profilePhone);
         fullName = root.findViewById(R.id.profileName);
         email = root.findViewById(R.id.profileEmail);
-        resetPassLocal = root.findViewById(R.id.resetPasswordLocal);
+       // resetPassLocal = root.findViewById(R.id.resetPasswordLocal);
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();

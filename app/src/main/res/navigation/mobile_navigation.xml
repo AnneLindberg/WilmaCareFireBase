@@ -19,12 +19,13 @@
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.example.wilmacarefirebase.ui.notifications.NotificationsFragment"
+        android:name="com.example.wilmacarefirebase.ui.calender.CalenderFragment"
         android:label="Kalender"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_calender" />
+
     <fragment
-        android:id="@+id/calenderFragment"
-        android:name="com.example.wilmacarefirebase.CalenderFragment"
-        android:label="Beboer"
-        tools:layout="@layout/calender_fragment" />
+        android:id="@+id/navigation_residentProfile"
+        android:name="com.example.wilmacarefirebase.ui.resident.ResidentFragment"
+        android:label="fragment_resident"
+        tools:layout="@layout/fragment_resident" />
 </navigation>

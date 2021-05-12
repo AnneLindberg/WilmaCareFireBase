@@ -5,26 +5,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/backgroundlight"
-    tools:context=".ui.dashboard.DashboardFragment">
+    tools:context=".ui.calender.CalenderFragment">
 
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/addNewPost"
+        android:id="@+id/addNewActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="28dp"
         android:layout_marginRight="28dp"
         android:layout_marginBottom="124dp"
-        android:text="Lav opslag"
+        android:text="Lav aftale"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_dashboard"
+        android:id="@+id/recycler_view_calender"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/user_display_post" />
+        tools:listitem="@layout/calender_list" />
 </androidx.constraintlayout.widget.ConstraintLayout>
