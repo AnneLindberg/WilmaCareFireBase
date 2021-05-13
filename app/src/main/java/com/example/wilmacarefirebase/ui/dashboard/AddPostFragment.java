@@ -21,11 +21,11 @@ public class AddPostFragment extends AppCompatActivity {
 
     public static final String EXTRA_USERNAME = "com.example.WilmaCareFireBase.EXTRA_USERNAME";
     public static final String EXTRA_DESCRIPTION = "com.example.WilmaCareFireBase.EXTRA_DESCRIPTION";
+    private DashPostAdapter adapterPost;
 
     private AddPostViewModel viewModel;
     private EditText editTextDescription, editTextUserName;
     private Button buttonAddPost;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -67,6 +67,11 @@ public class AddPostFragment extends AppCompatActivity {
 
         setResult(RESULT_OK, data);
         finish();
+        added();
+    }
+
+    public void added() {
+        adapterPost.notifyDataSetChanged();
     }
 
     @Override

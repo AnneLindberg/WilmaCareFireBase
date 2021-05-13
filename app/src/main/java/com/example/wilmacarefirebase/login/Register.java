@@ -55,6 +55,8 @@ public class Register extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
         firebaseFirestore = FirebaseFirestore.getInstance();
 
+
+        //check if user already exist, if yes just go to mainactivity
         if(firebaseAuth.getCurrentUser() != null){
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
             finish();
@@ -125,7 +127,6 @@ public class Register extends AppCompatActivity {
 
         });
 
-        //TODO: ask Kasper why this is not working...
         alreadyRegistered.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

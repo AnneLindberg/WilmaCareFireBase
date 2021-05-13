@@ -1,6 +1,5 @@
 package com.example.wilmacarefirebase.models;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class DashboardPost {
@@ -8,14 +7,14 @@ public class DashboardPost {
     private String username;
     private String message;
     private String image;
-    private ArrayList<DashboardPost> posts;
+    private ArrayList<DashboardPost> postsList;
     //private SimpleDateFormat date = new SimpleDateFormat("dd-M-yyyy");
 
     public DashboardPost(String username, String message, String image) {
         this.username = username;
         this.message = message;
         this.image = image;
-        this.posts = new ArrayList<>();
+        this.postsList = new ArrayList<>();
     }
 
     public String getUsername() {
@@ -44,6 +43,13 @@ public class DashboardPost {
 
 
     public void addPost(DashboardPost post) {
-        posts.add(post);
+        postsList.add(post);
     }
+
+
+    public ArrayList<DashboardPost> getPostFirebase() {
+        return postsList;
+    }
+
+
 }

@@ -1,47 +1,37 @@
 package com.example.wilmacarefirebase.data;
 
-import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.LiveData;
 
 import com.example.wilmacarefirebase.models.DashboardPost;
-import com.example.wilmacarefirebase.ui.dashboard.DashboardFragment;
-import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.ArrayList;
+import com.google.firebase.auth.FirebaseUser;
 
 public class WilmaRepository {
 
     private WilmaCareDao dao;
     private static WilmaRepository instance;
-    private ArrayList<DashboardPost> dashboardPostArrayList = new ArrayList<>();
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
     private static final String TAG = "WilmaRepository";
 
 
-    public static WilmaRepository getInstance(DashboardFragment context){
+    public WilmaRepository() {
+        this.dao = WilmaCareDao.getInstance();
+    }
+
+    public static WilmaRepository getInstance(){
         if (instance == null){
             instance = new WilmaRepository();
         }
         return instance;
     }
 
-    public static WilmaRepository getInstance() {
-        if (instance == null){
-            instance = new WilmaRepository();
-        }
-        return instance;
-    }
-
-    public MutableLiveData<DashboardPost> getPost() {
+    public LiveData<DashboardPost> getPost() {
         return dao.getDashPostFB();
     }
 
 
     public void updatePosts(DashboardPost dashboardPost) {
-    }
-
-    public void insert(DashboardPost feedPost) {
+        dao.updatePost(dashboardPost);
     }
 
     public void update(DashboardPost feedPost) {
@@ -55,5 +45,9 @@ public class WilmaRepository {
 
     public void addPost(DashboardPost post) {
         dao.addPost(post);
+    }
+
+    public FirebaseUser getUser(){
+        return dao.getUser();
     }
 }

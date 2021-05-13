@@ -47,22 +47,12 @@ public class DashboardFragment extends Fragment {
 
         List<DashboardPost> dashboardPostList= new ArrayList<>();
 
-        dashboardPostList.add(new DashboardPost("Anne", "hvordan går det med jer allesammen?","null"));
-        dashboardPostList.add(new DashboardPost("Anne", "safdsafdsaf går det med jer allesammen?","null"));
-        dashboardPostList.add(new DashboardPost("Anne", "hvorafdsafdsafdsdan går det med jer allesammen?","null"));
-        dashboardPostList.add(new DashboardPost("Anne", "hvordanafdsafdsaffsafdsafdsafdsafdsaf går det med jer allesammen?","null"));
-
         adapterPost = new DashPostAdapter(dashboardPostList);
         recyclerView.setAdapter(adapterPost);
 
         viewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
-        viewModel.init(DashboardFragment.this);
-//        viewModel.getPost().observe(getViewLifecycleOwner(), new Observer<ArrayList<DashboardPost>>() {
-//            @Override
-//            public void onChanged(ArrayList<DashboardPost> dashboardPosts) {
-//                dashPostAdapter.setPost(dashboardPosts);
-//            }
-//        });
+        viewModel.getPost();
+
 
             buttonAddPost.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,11 +79,6 @@ public class DashboardFragment extends Fragment {
         }else {
             Log.e("ERROR","Post not saved to db");
         }
-    }
-
-    public void added() {
-        adapterPost.notifyDataSetChanged();
-
     }
 
 

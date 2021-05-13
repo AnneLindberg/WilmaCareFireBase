@@ -3,13 +3,13 @@ package com.example.wilmacarefirebase.models;
 import java.text.SimpleDateFormat;
 
 public class CalenderPost {
-    private String username;
+    private String title;
     private String message;
     private String image;
-    private SimpleDateFormat date = new SimpleDateFormat("dd-M-yyyy");
+ //   private SimpleDateFormat date = new SimpleDateFormat("dd-M-yyyy");
 
     public CalenderPost(String username, String message, String image) {
-        this.username = username;
+        this.title = username;
         this.message = message;
         this.image = image;
     }
@@ -18,12 +18,12 @@ public class CalenderPost {
     }
 
 
-    public String getUsername() {
-        return username;
+    public String getTitle() {
+        return title;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getMessage() {
@@ -42,13 +42,7 @@ public class CalenderPost {
         this.image = image;
     }
 
-    public SimpleDateFormat getDate() {
-        return date;
-    }
 
-    public void setDate(SimpleDateFormat date) {
-        this.date = date;
-    }
 }
 
 
