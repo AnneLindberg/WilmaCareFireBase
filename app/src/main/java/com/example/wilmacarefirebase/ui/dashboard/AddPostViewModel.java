@@ -1,6 +1,5 @@
 package com.example.wilmacarefirebase.ui.dashboard;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.wilmacarefirebase.data.WilmaRepository;
@@ -11,19 +10,11 @@ public class AddPostViewModel extends ViewModel {
     private WilmaRepository repository;
 
     public AddPostViewModel() {
-        repository = WilmaRepository.getInstance();
+        repository = new WilmaRepository();
     }
 
-
-    public LiveData<DashboardPost> getPost(){
-        return repository.getPost();
-    }
 
     public void addPost(DashboardPost post){
-        repository.addPost(post);
+        repository.addPost();
     }
-
-
-
-
 }

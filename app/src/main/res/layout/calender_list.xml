@@ -29,7 +29,7 @@
             tools:ignore="UselessParent">
 
             <ImageView
-                android:id="@+id/users_profile_image"
+                android:id="@+id/dashpost_image"
                 android:layout_width="74dp"
                 android:layout_height="match_parent"
                 android:src="@drawable/profile_pic" />

@@ -1,39 +1,39 @@
 package com.example.wilmacarefirebase.ui.dashboard;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.wilmacarefirebase.data.WilmaRepository;
 import com.example.wilmacarefirebase.models.DashboardPost;
 
-public class DashboardViewModel extends ViewModel {
+import java.util.List;
+
+public class DashboardViewModel extends ViewModel implements WilmaRepository.OnFirestoreTaskComplete {
 
 
-    private WilmaRepository repository;
+    private WilmaRepository repository = new WilmaRepository(this);
+    private MutableLiveData<List<DashboardPost>> postLiveData = new MutableLiveData<>();
 
     public DashboardViewModel() {
-        this.repository = WilmaRepository.getInstance();
+        repository.getPostData();
     }
 
-    public LiveData<DashboardPost> getPost(){
-        return repository.getPost();
+    public LiveData<List<DashboardPost>> getPostLiveData() {
+        return postLiveData;
     }
 
-    public void updatePosts(DashboardPost dashboardPost){
-        repository.updatePosts(dashboardPost);
+
+    @Override
+    public void postDataAdded(List<DashboardPost> dashboardPostList) {
+        postLiveData.setValue(dashboardPostList);
     }
 
-    public void insert(DashboardPost feedPost){
-        repository.addPost(feedPost);
-    }
+    @Override
+    public void onError(Exception e) {
 
-    public void delete(DashboardPost feedPost){
-        repository.delete(feedPost);
     }
-
-    public void deleteAllFeedPost(){
-        repository.deleteAllPost();
-    }
-
 
 }
+
+

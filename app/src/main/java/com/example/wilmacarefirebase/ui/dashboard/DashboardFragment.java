@@ -1,8 +1,6 @@
 package com.example.wilmacarefirebase.ui.dashboard;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,10 +17,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.wilmacarefirebase.R;
 import com.example.wilmacarefirebase.models.DashboardPost;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.app.Activity.RESULT_OK;
 
 public class DashboardFragment extends Fragment {
 
@@ -45,20 +43,22 @@ public class DashboardFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.hasFixedSize();
 
-        List<DashboardPost> dashboardPostList= new ArrayList<>();
+        List<DashboardPost> dashboardPostList = new ArrayList<>();
 
-        adapterPost = new DashPostAdapter(dashboardPostList);
+        adapterPost = new DashPostAdapter();
         recyclerView.setAdapter(adapterPost);
 
-        viewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
-        viewModel.getPost();
 
-
-            buttonAddPost.setOnClickListener(new View.OnClickListener() {
+        buttonAddPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), AddPostFragment.class);
-                startActivityForResult(intent, ADD_POST_REQUEST);
+                AddPostFragment fragment = new AddPostFragment();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.navigation_addPost, fragment, "findThisFragment").addToBackStack(null).commit();
+
+//                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+//                AddPostFragment fragment = new AddPostFragment();
+//                fragmentTransaction.replace(R.id.addPostFragment, fragment);
+//                fragmentTransaction.commit();
             }
         });
         return root;
@@ -66,28 +66,31 @@ public class DashboardFragment extends Fragment {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-        if(requestCode == ADD_POST_REQUEST || requestCode == RESULT_OK){
-            String username = data.getStringExtra(AddPostFragment.EXTRA_USERNAME);
-            String post = data.getStringExtra(AddPostFragment.EXTRA_DESCRIPTION);
 
-            DashboardPost p = new DashboardPost(username,post, null);
-        viewModel.insert(p);
-            Log.e("added note","added post to db");
-        }else {
-            Log.e("ERROR","Post not saved to db");
-        }
     }
 
+    @Override
+    public void onActivityCreated(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        viewModel = new ViewModelProvider(getActivity()).get(DashboardViewModel.class);
+        viewModel.getPostLiveData().observe(getViewLifecycleOwner(), new Observer<List<DashboardPost>>() {
+            @Override
+            public void onChanged(List<DashboardPost> dashboardPostList) {
+                adapterPost.setDashPost(dashboardPostList);
+                adapterPost.notifyDataSetChanged();
+            }
+        });
+    }
 
     @Override
     public void onStart() {
         super.onStart();
 
-            }
-
     }
+
+}
 
 

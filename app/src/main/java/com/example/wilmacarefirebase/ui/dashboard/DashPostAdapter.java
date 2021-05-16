@@ -1,27 +1,24 @@
 package com.example.wilmacarefirebase.ui.dashboard;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.wilmacarefirebase.R;
 import com.example.wilmacarefirebase.models.DashboardPost;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class DashPostAdapter extends RecyclerView.Adapter<DashPostAdapter.ViewHolder> {
 
 
     private List<DashboardPost> postItemList;
-
-    public DashPostAdapter(List<DashboardPost> postItemList) {
-        this.postItemList = postItemList;
-    }
-
 
     @NonNull
     @Override
@@ -35,37 +32,56 @@ public class DashPostAdapter extends RecyclerView.Adapter<DashPostAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.itemView.setTag(postItemList.get(position));
-//      holder.user_image.setText(postItemList.get(position).getImage());
+        holder.title.setText(postItemList.get(position).getTitle());
         holder.username.setText(postItemList.get(position).getUsername());
-        holder.post.setText(postItemList.get(position).getMessage());
 
-    }
 
-    public void setPost(List<DashboardPost> notes) {
-        this.postItemList = (ArrayList<DashboardPost>) notes;
-        notifyDataSetChanged();
+
+        //if dashboardpost is too long add ..., to check more
+        String dashpostDec = postItemList.get(position).getDescription();
+        if(dashpostDec.length() > 200){
+            dashpostDec = dashpostDec.substring(0,150);
+        }
+
+        holder.description.setText(dashpostDec + "...");
+
+
+        String imageUrl =  postItemList.get(position).getImage();
+        Glide.with(holder.itemView.getContext())
+                .load(imageUrl)
+                .centerCrop()
+                .placeholder(R.drawable.johanne)
+                .into(holder.user_image);
     }
 
     @Override
     public int getItemCount() {
-        return postItemList.size();
+        if (postItemList == null) {
+            return 0;
+        } else {
+            return postItemList.size();
+        }
     }
+
+    public void setDashPost(List<DashboardPost> dashboardPostList) {
+        this.postItemList = dashboardPostList;
+    }
+
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView user_image, username, post;
+        TextView username, title, description;
+        ImageView user_image;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-//            user_image = itemView.findViewById(R.id.users_profile_image);
+            user_image = itemView.findViewById(R.id.dashpost_image);
             username = itemView.findViewById(R.id.user_profile_name);
-            post = itemView.findViewById(R.id.user_message);
+            description = itemView.findViewById(R.id.user_message);
+            title = itemView.findViewById(R.id.user_title);
+
         }
     }
 
-    public interface OnListItemClickListener
-    {
-        void onClick(int position);
-    }
 }

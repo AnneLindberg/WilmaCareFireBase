@@ -15,7 +15,8 @@
         android:id="@+id/navigation_dashboard"
         android:name="com.example.wilmacarefirebase.ui.dashboard.DashboardFragment"
         android:label="Opslagstavlen"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_dashboard">
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_notifications"
@@ -28,4 +29,9 @@
         android:name="com.example.wilmacarefirebase.ui.resident.ResidentFragment"
         android:label="fragment_resident"
         tools:layout="@layout/fragment_resident" />
+    <fragment
+        android:id="@+id/navigation_addPost"
+        android:name="com.example.wilmacarefirebase.ui.dashboard.AddPostFragment"
+        android:label="Lav Opslag"
+        tools:layout="@layout/fragment_add_post" />
 </navigation>

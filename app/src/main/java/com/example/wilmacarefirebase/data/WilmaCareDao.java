@@ -14,7 +14,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -22,12 +21,13 @@ import com.google.firebase.firestore.QuerySnapshot;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class WilmaCareDao {
 
     private static final String TAG = "Dao";
-    private MutableLiveData<DashboardPost> dashPostML;
+    private MutableLiveData<MutableLiveData<List<DashboardPost>>> dashPostML;
     private MutableLiveData<CalenderPost> calenderPostMutableLiveData;
     private FirebaseUser user;
     FirebaseAuth firebaseAuth;
@@ -37,15 +37,8 @@ public class WilmaCareDao {
 
     public WilmaCareDao() {
         db = FirebaseFirestore.getInstance();
-        dashPostML = new MutableLiveData<>();
+        dashPostML = new MutableLiveData<MutableLiveData<List<DashboardPost>>>();
 
-        dashPostML.observeForever(new Observer<DashboardPost>() {
-            @Override
-            public void onChanged(DashboardPost dashboardPost) {
-                DocumentReference documentReference = db.collection("dashpost").document();
-                documentReference.set(dashboardPost.getPostFirebase());
-            }
-        });
         readFromDB();
         readPostFromDB();
 
@@ -88,7 +81,7 @@ public class WilmaCareDao {
         return instance;
     }
 
-    public void addPost(DashboardPost post) {
+    public void addPost(MutableLiveData<List<DashboardPost>> post) {
         dashPostML.setValue(post);
     }
 
@@ -107,26 +100,9 @@ public class WilmaCareDao {
            }
        });
 
-
-//        DocumentReference reference = db.collection("dashpost").document();
-//        reference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull @NotNull Task<DocumentSnapshot> task) {
-//                if(task.isSuccessful()){
-//                    DocumentSnapshot document = task.getResult();
-//                    if (document.exists()) {
-//                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
-//                    } else {
-//                        Log.d(TAG, "No such document");
-//                    }
-//                } else {
-//                    Log.d(TAG, "get failed with ", task.getException());
-//                }
-//            }
-//        });
     }
 
-    public LiveData<DashboardPost> getDashPostFB() {
+    public LiveData<MutableLiveData<List<DashboardPost>>> getDashPostFB() {
         return dashPostML;
 
 

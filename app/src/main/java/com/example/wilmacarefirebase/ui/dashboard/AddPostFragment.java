@@ -1,95 +1,72 @@
 package com.example.wilmacarefirebase.ui.dashboard;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.ImageView;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
-
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 import com.example.wilmacarefirebase.R;
+import com.example.wilmacarefirebase.models.DashboardPost;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
-public class AddPostFragment extends AppCompatActivity {
+import java.util.UUID;
+
+public class AddPostFragment extends Fragment {
 
     public static final String EXTRA_USERNAME = "com.example.WilmaCareFireBase.EXTRA_USERNAME";
     public static final String EXTRA_DESCRIPTION = "com.example.WilmaCareFireBase.EXTRA_DESCRIPTION";
-    private DashPostAdapter adapterPost;
-
+    private CollectionReference collectionReference;
     private AddPostViewModel viewModel;
-    private EditText editTextDescription, editTextUserName;
+    private EditText editTextDescription, editTextUserName, editTextTitle;
+    private ImageView photoView;
     private Button buttonAddPost;
+    private String imageId;
+    private DashboardPost newPost;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_post);
+    public View onCreate(@NonNull LayoutInflater inflater,
+                         ViewGroup container, Bundle savedInstanceState) {
+        viewModel = new ViewModelProvider(this).get(AddPostViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_add_post, container, false);
 
-        editTextDescription = findViewById(R.id.edtinputpost);
-        editTextUserName = findViewById(R.id.edtwriteusername);
-        buttonAddPost = findViewById(R.id.btnSavePost);
+
+        editTextDescription = root.findViewById(R.id.edtinputpost);
+        editTextTitle = root.findViewById(R.id.edtTitle);
+        editTextUserName = root.findViewById(R.id.edtwriteusername);
+        buttonAddPost = root.findViewById(R.id.btnSavePost);
+        photoView = root.findViewById(R.id.addphoto);
+
+        //fandt eksempel til at oploade billeder online, men har senere glemt hvilken tutorial
+        imageId = UUID.randomUUID().toString() + ".jpg";
+
+        collectionReference = FirebaseFirestore.getInstance().collection("dashboardlist");
+
+        editTextUserName.setText(newPost.getUsername());
+        editTextTitle.setText(newPost.getTitle());
+        editTextDescription.setText(newPost.getDescription());
 
         buttonAddPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                savePost();
-//                Intent intent = new Intent(AddPostFragment.this, DashboardFragment.class);
-//                startActivity(intent);
-
-                Fragment mFragment = null;
-                mFragment = new DashboardFragment();
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.frameLayout, mFragment).commit();
+                newPost.setUsername(editTextUserName.getText().toString());
+                newPost.setTitle(editTextTitle.getText().toString());
+                newPost.setDescription(editTextDescription.getText().toString());
+                viewModel.addPost(newPost);
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                DashboardFragment fragment = new DashboardFragment();
+                fragmentTransaction.replace(R.id.navigation_dashboard, fragment);
+                fragmentTransaction.commit();
             }
         });
+        return root;
     }
 
-    private void savePost() {
-        String username = editTextUserName.getText().toString();
-        String description = editTextDescription.getText().toString();
-
-        if(username.trim().isEmpty() || description.trim().isEmpty()){
-            Toast.makeText(this, "Skriv venligst et brugernavn og et opslag", Toast.LENGTH_SHORT);
-            return;
-        }
-
-        Intent data = new Intent();
-        data.putExtra(EXTRA_USERNAME, username);
-        data.putExtra(EXTRA_DESCRIPTION, description);
-
-        setResult(RESULT_OK, data);
-        finish();
-        added();
-    }
-
-    public void added() {
-        adapterPost.notifyDataSetChanged();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.bottom_nav_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.btnSavePost:
-                savePost();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 
 }
