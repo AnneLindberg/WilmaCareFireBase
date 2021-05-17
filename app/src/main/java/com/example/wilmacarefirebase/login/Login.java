@@ -26,7 +26,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class Login extends AppCompatActivity {
 
-    EditText mEmail,mPassword;
+    EditText memail,mPassword;
     Button mLoginBtn;
     TextView mCreateBtn,forgotTextLink;
     ProgressBar progressBar;
@@ -38,7 +38,7 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        mEmail = findViewById(R.id.edtextEmailLogin);
+        memail = findViewById(R.id.edtextEmailLogin);
         mPassword = findViewById(R.id.edtextPasswordLogin);
         progressBar = findViewById(R.id.progressBar);
         fAuth = FirebaseAuth.getInstance();
@@ -51,11 +51,11 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String email = mEmail.getText().toString().trim();
+                String email = memail.getText().toString().trim();
                 String password = mPassword.getText().toString().trim();
 
                 if(TextUtils.isEmpty(email)){
-                    mEmail.setError("Email is Required.");
+                    memail.setError("Email is Required.");
                     return;
                 }
 

@@ -56,7 +56,7 @@ public class Register extends AppCompatActivity {
         firebaseFirestore = FirebaseFirestore.getInstance();
 
 
-        //check if user already exist, if yes just go to mainactivity
+        //check if user already exist, if yes just go to MainActivity
         if(firebaseAuth.getCurrentUser() != null){
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
             finish();
@@ -65,8 +65,8 @@ public class Register extends AppCompatActivity {
         mRegisterBtn.setOnClickListener(v -> {
             final String email = editTextEmail.getText().toString().trim();
             String password = editTextPassword.getText().toString().trim();
-            final String fullName = editTextFullName.getText().toString();
-            final String phone    = editTextPhone.getText().toString();
+            final String displayName = editTextFullName.getText().toString();
+            final String phoneNumber    = editTextPhone.getText().toString();
 
             if(TextUtils.isEmpty(email)){
                 editTextEmail.setError("Email is Required.");
@@ -109,9 +109,9 @@ public class Register extends AppCompatActivity {
                     userID = firebaseAuth.getCurrentUser().getUid();
                     DocumentReference documentReference = firebaseFirestore.collection("users").document(userID);
                     Map<String, Object> user = new HashMap<>();
-                    user.put("editTextFullName", fullName);
-                    user.put("editTextEmail", email);
-                    user.put("editTextPhone", phone);
+                    user.put("displayname", displayName);
+                    user.put("email", email);
+                    user.put("phonenumber", phoneNumber);
                     documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
