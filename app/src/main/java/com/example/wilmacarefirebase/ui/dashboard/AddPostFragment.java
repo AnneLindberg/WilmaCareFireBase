@@ -1,27 +1,27 @@
 package com.example.wilmacarefirebase.ui.dashboard;
-
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.appcompat.app.AppCompatActivity;
 import com.example.wilmacarefirebase.R;
 import com.example.wilmacarefirebase.models.DashboardPost;
+import com.example.wilmacarefirebase.ui.MainActivity;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
-public class AddPostFragment extends Fragment {
+public class AddPostFragment extends AppCompatActivity {
 
-    public static final String EXTRA_USERNAME = "com.example.WilmaCareFireBase.EXTRA_USERNAME";
-    public static final String EXTRA_DESCRIPTION = "com.example.WilmaCareFireBase.EXTRA_DESCRIPTION";
     private CollectionReference collectionReference;
     private AddPostViewModel viewModel;
     private EditText editTextDescription, editTextUserName, editTextTitle;
@@ -29,43 +29,53 @@ public class AddPostFragment extends Fragment {
     private Button buttonAddPost;
     private String imageId;
     private DashboardPost newPost;
+    FirebaseAuth firebaseAuth;
+    FirebaseFirestore firebaseFirestore;
+    String userID;
+
 
     @Override
-    public View onCreate(@NonNull LayoutInflater inflater,
-                         ViewGroup container, Bundle savedInstanceState) {
-        viewModel = new ViewModelProvider(this).get(AddPostViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_add_post, container, false);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_add_post);
 
 
-        editTextDescription = root.findViewById(R.id.edtinputpost);
-        editTextTitle = root.findViewById(R.id.edtTitle);
-        editTextUserName = root.findViewById(R.id.edtwriteusername);
-        buttonAddPost = root.findViewById(R.id.btnSavePost);
-        photoView = root.findViewById(R.id.addphoto);
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseFirestore = FirebaseFirestore.getInstance();
+
+        editTextDescription =findViewById(R.id.edtinputpost);
+        editTextTitle = findViewById(R.id.edtTitle);
+        editTextUserName = findViewById(R.id.edtwriteusername);
+        buttonAddPost = findViewById(R.id.btnSavePost);
+        photoView = findViewById(R.id.addphoto);
 
         //fandt eksempel til at oploade billeder online, men har senere glemt hvilken tutorial
         imageId = UUID.randomUUID().toString() + ".jpg";
 
         collectionReference = FirebaseFirestore.getInstance().collection("dashboardlist");
 
-        editTextUserName.setText(newPost.getUsername());
-        editTextTitle.setText(newPost.getTitle());
-        editTextDescription.setText(newPost.getDescription());
+        buttonAddPost.setOnClickListener(view -> {
+            //only saves one post. But that has to do for now
+            //TODO:: make sure to move to dao or repository. also find a way to save your data and not just adding it once
+            final String username = editTextUserName.getText().toString().trim();
+            final String title = editTextTitle.getText().toString().trim();
+            final String description = editTextDescription.getText().toString().trim();
+            userID = firebaseAuth.getCurrentUser().getUid();
+            DocumentReference documentReference = firebaseFirestore.collection("dashboardlist").document(userID);
+            Map<String, Object> post = new HashMap<>();
+            post.put("username", username);
+            post.put("title", title);
+            post.put("description", description);
+            post.put("image", null);
+            documentReference.set(post).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Log.d("ms","onSuccess: post is added" + userID);
+                }
+            });
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
 
-        buttonAddPost.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                newPost.setUsername(editTextUserName.getText().toString());
-                newPost.setTitle(editTextTitle.getText().toString());
-                newPost.setDescription(editTextDescription.getText().toString());
-                viewModel.addPost(newPost);
-                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                DashboardFragment fragment = new DashboardFragment();
-                fragmentTransaction.replace(R.id.navigation_dashboard, fragment);
-                fragmentTransaction.commit();
-            }
         });
-        return root;
     }
 
 

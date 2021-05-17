@@ -1,5 +1,6 @@
 package com.example.wilmacarefirebase.ui.dashboard;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,6 +24,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class DashboardFragment extends Fragment {
 
@@ -52,19 +56,20 @@ public class DashboardFragment extends Fragment {
         buttonAddPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AddPostFragment fragment = new AddPostFragment();
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.navigation_addPost, fragment, "findThisFragment").addToBackStack(null).commit();
-
-//                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-//                AddPostFragment fragment = new AddPostFragment();
-//                fragmentTransaction.replace(R.id.addPostFragment, fragment);
-//                fragmentTransaction.commit();
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), AddPostFragment.class);
+                getActivity().startActivity(intent);
             }
         });
         return root;
 
     }
 
+    public static DashboardFragment getInstance(){
+        DashboardFragment fragment = new DashboardFragment();
+        return fragment;
+
+    }
     @Override
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

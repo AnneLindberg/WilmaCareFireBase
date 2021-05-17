@@ -34,16 +34,7 @@ public class DashPostAdapter extends RecyclerView.Adapter<DashPostAdapter.ViewHo
         holder.itemView.setTag(postItemList.get(position));
         holder.title.setText(postItemList.get(position).getTitle());
         holder.username.setText(postItemList.get(position).getUsername());
-
-
-
-        //if dashboardpost is too long add ..., to check more
-        String dashpostDec = postItemList.get(position).getDescription();
-        if(dashpostDec.length() > 200){
-            dashpostDec = dashpostDec.substring(0,150);
-        }
-
-        holder.description.setText(dashpostDec + "...");
+        holder.description.setText(postItemList.get(position).getDescription());
 
 
         String imageUrl =  postItemList.get(position).getImage();
