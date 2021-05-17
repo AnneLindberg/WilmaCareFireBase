@@ -11,6 +11,8 @@ public class Resident {
     String nameOfContactPerson;
     String phoneNumberContactPerson;
 
+    public Resident() {
+    }
 
     public Resident(String firstname, String lastname, int bornIn, String description, String nameOfContactPerson, String phoneNumberContactPerson) {
         this.firstname = firstname;

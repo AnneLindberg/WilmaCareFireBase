@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/backgroundlight"
-    tools:context=".ResidentFragment">
+    tools:context="ui.resident.ResidentFragment">
 
     <ImageView
         android:id="@+id/imageView6"
@@ -38,7 +38,7 @@
         android:layout_width="229dp"
         android:layout_height="56dp"
         android:layout_marginBottom="167dp"
-        android:src="@drawable/btnsmall"
+        android:src="@drawable/btn_borger"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -27,11 +27,16 @@
     <fragment
         android:id="@+id/navigation_residentProfile"
         android:name="com.example.wilmacarefirebase.ui.resident.ResidentFragment"
-        android:label="fragment_resident"
+        android:label="Borger info"
         tools:layout="@layout/fragment_resident" />
     <fragment
         android:id="@+id/navigation_addPost"
         android:name="com.example.wilmacarefirebase.ui.dashboard.AddPostFragment"
         android:label="Lav Opslag"
         tools:layout="@layout/fragment_add_post" />
+    <fragment
+        android:id="@+id/navigation_aboutresident"
+        android:name="com.example.wilmacarefirebase.ui.resident.AboutResidentFragment"
+        android:label="Om borger"
+        tools:layout="@layout/fragment_about_resident"/>
 </navigation>

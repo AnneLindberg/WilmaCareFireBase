@@ -9,7 +9,7 @@ import com.example.wilmacarefirebase.models.DashboardPost;
 
 import java.util.List;
 
-public class DashboardViewModel extends ViewModel implements WilmaRepository.OnFirestoreTaskComplete {
+public class DashboardViewModel extends ViewModel implements WilmaRepository.OnFirestoreTaskCompleteDashPost {
 
 
     private WilmaRepository repository = new WilmaRepository(this);
