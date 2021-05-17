@@ -5,12 +5,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.wilmacarefirebase.R;
@@ -20,11 +20,13 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.StorageReference;
 
-import static com.firebase.ui.auth.AuthUI.getApplicationContext;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 
 public class HomeFragment extends Fragment {
 
-    private HomeViewModel homeViewModel;
+    private HomeViewModel viewModel;
     private static final int GALLERY_INTENT_CODE = 1023;
     TextView displayname, email, phonenumber;
     FirebaseAuth firebaseAuth;
@@ -34,28 +36,33 @@ public class HomeFragment extends Fragment {
     FirebaseUser user;
     ImageView profileImage;
     StorageReference storageReference;
+    private String phonenumberts, displaynamets;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+        viewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
         phonenumber = root.findViewById(R.id.profilePhone);
         displayname = root.findViewById(R.id.profileName);
         email = root.findViewById(R.id.profileEmail);
         btnLogOut = root.findViewById(R.id.btnLogOut);
-       // resetPassLocal = root.findViewById(R.id.resetPasswordLocal);
 
+        FirebaseAuth.getInstance().addAuthStateListener(new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull @NotNull FirebaseAuth firebaseAuth) {
+                userId = firebaseAuth.getCurrentUser().getUid();
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                displaynamets = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getDisplayName();
+                phonenumberts = firebaseAuth.getCurrentUser().getPhoneNumber();
+                phonenumberts = user.getPhoneNumber();
+                displaynamets = user.getDisplayName();
 
-        //fetching user data from firestore
-        firebaseAuth = FirebaseAuth.getInstance();
-
-        //TODO:: why u no work
-        userId = firebaseAuth.getCurrentUser().getUid();
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-
-            phonenumber.setText(user.getPhoneNumber());
-            displayname.setText(user.getDisplayName());
-            email.setText(user.getEmail());
+                phonenumber.setText(phonenumberts);
+                displayname.setText(displaynamets);
+                email.setText(user.getEmail());
+            }
+        });
 
             //logout
             btnLogOut.setOnClickListener(new View.OnClickListener() {
@@ -68,8 +75,5 @@ public class HomeFragment extends Fragment {
 
         return root;
 }
-
-
-
 
 }

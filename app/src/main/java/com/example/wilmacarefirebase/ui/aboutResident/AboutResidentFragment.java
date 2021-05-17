@@ -1,4 +1,4 @@
-package com.example.wilmacarefirebase.ui.resident;
+package com.example.wilmacarefirebase.ui.aboutResident;
 
 
 import android.os.Bundle;
@@ -15,12 +15,12 @@ import com.example.wilmacarefirebase.R;
 public class AboutResidentFragment extends Fragment {
 
 
-    private ResidentViewModel viewModel;
+    private AboutResidentViewModel viewModel;
     private Button aboutResident;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        viewModel = new ViewModelProvider(this).get(ResidentViewModel.class);
+        viewModel = new ViewModelProvider(this).get(AboutResidentViewModel.class);
         View root = inflater.inflate(R.layout.fragment_about_resident, container, false);
 
         return root;

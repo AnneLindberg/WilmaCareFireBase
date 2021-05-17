@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.wilmacarefirebase.models.DashboardPost;
+import com.example.wilmacarefirebase.models.HealthCareWorker;
 import com.example.wilmacarefirebase.models.Resident;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -17,20 +18,26 @@ import java.util.List;
 
 public class WilmaRepository {
 
-    private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-    private CollectionReference collectionReferencDashPost = firebaseFirestore.collection("dashboardlist");
-    private CollectionReference collectionReferenceCalender = firebaseFirestore.collection("calenderpost");
-    private CollectionReference collectionReferenceResident = firebaseFirestore.collection("resident");
+    private final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+    private final CollectionReference collectionReferencDashPost = firebaseFirestore.collection("dashboardlist");
+    private final CollectionReference collectionReferenceCalender = firebaseFirestore.collection("calenderpost");
+    private final CollectionReference collectionReferenceResident = firebaseFirestore.collection("resident");
+    private final CollectionReference collectionReferenceWorker = firebaseFirestore.collection("healthcareworker");
 
-    private WilmaCareDao dao;
+
     private MutableLiveData<List<DashboardPost>> postLiveData = new MutableLiveData<>();
     private static WilmaRepository instance;
 
 
     private OnFirestoreTaskCompleteDashPost onFirestoreTaskCompleteDashPost;
     private OnFireStoreTaskCompleteResident onFireStoreTaskCompleteResident;
+    private OnFireStoreTaskCompleteHealthCareWorker onFireStoreTaskCompleteHealthCareWorker;
 
     private static final String TAG = "WilmaRepository";
+
+    public WilmaRepository(OnFireStoreTaskCompleteHealthCareWorker onFireStoreTaskCompleteHealthCareWorker) {
+        this.onFireStoreTaskCompleteHealthCareWorker = onFireStoreTaskCompleteHealthCareWorker;
+    }
 
     public WilmaRepository(OnFirestoreTaskCompleteDashPost onFirestoreTaskComplete) {
         this.onFirestoreTaskCompleteDashPost = onFirestoreTaskComplete;
@@ -39,6 +46,7 @@ public class WilmaRepository {
     public WilmaRepository(OnFireStoreTaskCompleteResident onFireStoreTaskCompleteResident) {
         this.onFireStoreTaskCompleteResident = onFireStoreTaskCompleteResident;
     }
+
 
     public WilmaRepository() {
 
@@ -63,14 +71,24 @@ public class WilmaRepository {
             @Override
             public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
-                    onFireStoreTaskCompleteResident.residentDataAdded(task.getResult().toObjects(Resident.class));
+                   // onFireStoreTaskCompleteResident.residentDataAdded(task.getResult().toObjects(Resident.class));
                 }
             }
         });
     }
 
+    public void getHealthCareWorkerData(){
+        collectionReferenceWorker.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    onFireStoreTaskCompleteHealthCareWorker.healthcareDataAdded(task.getResult().toObjects(HealthCareWorker.class));
+                }
+            }
+        });
+    }
     public void addPost() {
-        dao.addPost(postLiveData);
+
     }
 
     public interface OnFirestoreTaskCompleteDashPost {
@@ -82,5 +100,11 @@ public class WilmaRepository {
         void residentDataAdded(List<Resident> residentList);
         void onError(Exception e);
     }
+
+    public interface OnFireStoreTaskCompleteHealthCareWorker{
+        void healthcareDataAdded(List<HealthCareWorker> careWorkerList);
+        void onError(Exception e);
+    }
+
 
 }

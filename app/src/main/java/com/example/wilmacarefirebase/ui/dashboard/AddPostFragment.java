@@ -55,8 +55,6 @@ public class AddPostFragment extends AppCompatActivity {
         collectionReference = FirebaseFirestore.getInstance().collection("dashboardlist");
 
         buttonAddPost.setOnClickListener(view -> {
-            //only saves one post. But that has to do for now
-            //TODO:: make sure to move to dao or repository. also find a way to save your data and not just adding it once
             final String username = editTextUserName.getText().toString().trim();
             final String title = editTextTitle.getText().toString().trim();
             final String description = editTextDescription.getText().toString().trim();

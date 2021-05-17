@@ -7,20 +7,14 @@ public class Resident {
     int bornIn;
     String description;
 
-    //normally would not do it like this, but the clients wanted that you should put it in manually..
-    String nameOfContactPerson;
-    String phoneNumberContactPerson;
-
     public Resident() {
     }
 
-    public Resident(String firstname, String lastname, int bornIn, String description, String nameOfContactPerson, String phoneNumberContactPerson) {
+    public Resident(String firstname, String lastname, int bornIn, String description) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.bornIn = bornIn;
         this.description = description;
-        this.nameOfContactPerson = nameOfContactPerson;
-        this.phoneNumberContactPerson = phoneNumberContactPerson;
     }
 
     public String getFirstname() {
@@ -55,19 +49,4 @@ public class Resident {
         this.description = description;
     }
 
-    public String getNameOfContactPerson() {
-        return nameOfContactPerson;
-    }
-
-    public void setNameOfContactPerson(String nameOfContactPerson) {
-        this.nameOfContactPerson = nameOfContactPerson;
-    }
-
-    public String getPhoneNumberContactPerson() {
-        return phoneNumberContactPerson;
-    }
-
-    public void setPhoneNumberContactPerson(String phoneNumberContactPerson) {
-        this.phoneNumberContactPerson = phoneNumberContactPerson;
-    }
 }

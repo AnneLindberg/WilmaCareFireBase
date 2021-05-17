@@ -5,25 +5,30 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.wilmacarefirebase.data.WilmaRepository;
-import com.example.wilmacarefirebase.models.Resident;
+import com.example.wilmacarefirebase.models.HealthCareWorker;
 
 import java.util.List;
 
-public class ResidentViewModel extends ViewModel implements WilmaRepository.OnFireStoreTaskCompleteResident {
+public class ResidentViewModel extends ViewModel implements WilmaRepository.OnFireStoreTaskCompleteHealthCareWorker {
 
     private WilmaRepository repository = new WilmaRepository(this);
-    private MutableLiveData<List<Resident>> residentData = new MutableLiveData<>();
+    private MutableLiveData<List<HealthCareWorker>> liveData = new MutableLiveData<>();
 
     public ResidentViewModel() {
         repository.getResidentData();
     }
 
-    public LiveData<List<Resident>> getResidentLiveData(){
-        return residentData;
+    public void init(){
+        repository.getHealthCareWorkerData();
     }
+    public LiveData<List<HealthCareWorker>> getWorkerList(){
+        return liveData;
+    }
+
+
     @Override
-    public void residentDataAdded(List<Resident> residentList) {
-        residentData.setValue(residentList);
+    public void healthcareDataAdded(List<HealthCareWorker> careWorkerList) {
+        liveData.setValue(careWorkerList);
     }
 
     @Override

@@ -3,13 +3,16 @@ package com.example.wilmacarefirebase.models;
 public class HealthCareWorker {
 
     private String fullname;
-    private String phoneNumber;
+    private String phonenumber;
     private String email;
     private String worksAt;
 
+    public HealthCareWorker() {
+    }
+
     public HealthCareWorker(String fullname, String phoneNumber, String email, String worksAt) {
         this.fullname = fullname;
-        this.phoneNumber = phoneNumber;
+        this.phonenumber = phoneNumber;
         this.email = email;
         this.worksAt = worksAt;
     }
@@ -22,12 +25,12 @@ public class HealthCareWorker {
         this.fullname = fullname;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getPhonenumber() {
+        return phonenumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setPhonenumber(String phonenumber) {
+        this.phonenumber = phonenumber;
     }
 
     public String getEmail() {
