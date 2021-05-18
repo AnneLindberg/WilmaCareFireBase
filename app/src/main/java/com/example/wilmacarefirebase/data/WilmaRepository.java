@@ -3,6 +3,7 @@ package com.example.wilmacarefirebase.data;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.wilmacarefirebase.models.CalenderPost;
 import com.example.wilmacarefirebase.models.DashboardPost;
 import com.example.wilmacarefirebase.models.HealthCareWorker;
 import com.example.wilmacarefirebase.models.Resident;
@@ -32,6 +33,7 @@ public class WilmaRepository {
     private OnFirestoreTaskCompleteDashPost onFirestoreTaskCompleteDashPost;
     private OnFireStoreTaskCompleteResident onFireStoreTaskCompleteResident;
     private OnFireStoreTaskCompleteHealthCareWorker onFireStoreTaskCompleteHealthCareWorker;
+    private OnFireStoreTaskCompleteCalender onFireStoreTaskCompleteCalender;
 
     private static final String TAG = "WilmaRepository";
 
@@ -46,6 +48,11 @@ public class WilmaRepository {
     public WilmaRepository(OnFireStoreTaskCompleteResident onFireStoreTaskCompleteResident) {
         this.onFireStoreTaskCompleteResident = onFireStoreTaskCompleteResident;
     }
+
+    public WilmaRepository(OnFireStoreTaskCompleteCalender onFireStoreTaskCompleteCalender){
+        this.onFireStoreTaskCompleteCalender = onFireStoreTaskCompleteCalender;
+    }
+
 
 
     public WilmaRepository() {
@@ -66,6 +73,18 @@ public class WilmaRepository {
         });
     }
 
+    public void getCalenderData(){
+        collectionReferenceCalender.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    onFireStoreTaskCompleteCalender.calenderDataAdded(task.getResult().toObjects(CalenderPost.class));
+                }else {
+                    onFireStoreTaskCompleteCalender.onError(task.getException());
+                }
+            }
+        });
+    }
     public void getResidentData(){
         collectionReferenceResident.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -106,5 +125,9 @@ public class WilmaRepository {
         void onError(Exception e);
     }
 
+    public interface OnFireStoreTaskCompleteCalender{
+        void calenderDataAdded(List<CalenderPost> calenderPostList);
+        void onError(Exception e);
+    }
 
 }

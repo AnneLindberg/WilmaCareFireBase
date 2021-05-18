@@ -19,6 +19,7 @@
         <activity android:name=".login.EditProfile" />
         <activity android:name=".login.Login" />
         <activity android:name=".ui.dashboard.AddPostFragment"/>
+        <activity android:name=".ui.calender.AddCalenderPost"/>
 
         <activity android:name=".login.Register">
             <intent-filter>

@@ -1,22 +1,18 @@
-package com.example.wilmacarefirebase.ui.dashboard;
+package com.example.wilmacarefirebase.data;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.example.wilmacarefirebase.R;
 import com.example.wilmacarefirebase.models.DashboardPost;
-
 import java.util.List;
 
 public class DashPostAdapter extends RecyclerView.Adapter<DashPostAdapter.ViewHolder> {
-
 
     private List<DashboardPost> postItemList;
 
@@ -36,12 +32,11 @@ public class DashPostAdapter extends RecyclerView.Adapter<DashPostAdapter.ViewHo
         holder.username.setText(postItemList.get(position).getUsername());
         holder.description.setText(postItemList.get(position).getDescription());
 
-
         String imageUrl =  postItemList.get(position).getImage();
         Glide.with(holder.itemView.getContext())
                 .load(imageUrl)
                 .centerCrop()
-                .placeholder(R.drawable.johanne)
+                .placeholder(R.drawable.no_picturefound)
                 .into(holder.user_image);
     }
 

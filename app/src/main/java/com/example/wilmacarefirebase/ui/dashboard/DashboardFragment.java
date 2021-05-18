@@ -10,26 +10,22 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wilmacarefirebase.R;
+import com.example.wilmacarefirebase.data.DashPostAdapter;
 import com.example.wilmacarefirebase.models.DashboardPost;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class DashboardFragment extends Fragment {
 
-    public static final int ADD_POST_REQUEST = 1;
-    private static final String TAG = "DashboardFragment";
     private ArrayList<DashboardPost> dashboardPostsList = new ArrayList<>();
     private DashPostAdapter adapterPost;
     private DashboardViewModel viewModel;

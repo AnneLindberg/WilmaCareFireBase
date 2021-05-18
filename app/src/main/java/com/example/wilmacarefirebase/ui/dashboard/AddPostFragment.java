@@ -72,7 +72,7 @@ public class AddPostFragment extends AppCompatActivity {
                 }
             });
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
-
+            //TODO:: open dashboard fragment instead
         });
     }
 
