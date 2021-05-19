@@ -32,12 +32,12 @@ public class DashPostAdapter extends RecyclerView.Adapter<DashPostAdapter.ViewHo
         holder.username.setText(postItemList.get(position).getUsername());
         holder.description.setText(postItemList.get(position).getDescription());
 
-        String imageUrl =  postItemList.get(position).getImage();
-        Glide.with(holder.itemView.getContext())
-                .load(imageUrl)
-                .centerCrop()
-                .placeholder(R.drawable.no_picturefound)
-                .into(holder.user_image);
+//        String imageUrl =  postItemList.get(position).getImage();
+//        Glide.with(holder.itemView.getContext())
+//                .load(imageUrl)
+//                .centerCrop()
+//                .placeholder(R.drawable.no_picturefound)
+//                .into(holder.user_image);
     }
 
     @Override
@@ -62,7 +62,7 @@ public class DashPostAdapter extends RecyclerView.Adapter<DashPostAdapter.ViewHo
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            user_image = itemView.findViewById(R.id.dashpost_image);
+            //user_image = itemView.findViewById(R.id.dashpost_image);
             username = itemView.findViewById(R.id.user_profile_name);
             description = itemView.findViewById(R.id.user_message);
             title = itemView.findViewById(R.id.user_title);

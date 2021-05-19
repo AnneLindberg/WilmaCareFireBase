@@ -23,7 +23,6 @@ import java.util.UUID;
 public class AddPostFragment extends AppCompatActivity {
 
     private CollectionReference collectionReference;
-    private AddPostViewModel viewModel;
     private EditText editTextDescription, editTextUserName, editTextTitle;
     private ImageView photoView;
     private Button buttonAddPost;

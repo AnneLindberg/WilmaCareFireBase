@@ -14,10 +14,12 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.wilmacarefirebase.R;
+import com.example.wilmacarefirebase.login.EditProfile;
 import com.example.wilmacarefirebase.login.Login;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import org.jetbrains.annotations.NotNull;
@@ -29,10 +31,9 @@ public class HomeFragment extends Fragment {
     private HomeViewModel viewModel;
     private static final int GALLERY_INTENT_CODE = 1023;
     TextView displayname, email, phonenumber;
-    FirebaseAuth firebaseAuth;
     FirebaseFirestore firebaseFirestore;
     String userId;
-    ImageView btnLogOut;
+    ImageView btnLogOut, changeProfile;
     FirebaseUser user;
     ImageView profileImage;
     StorageReference storageReference;
@@ -47,19 +48,24 @@ public class HomeFragment extends Fragment {
         displayname = root.findViewById(R.id.profileName);
         email = root.findViewById(R.id.profileEmail);
         btnLogOut = root.findViewById(R.id.btnLogOut);
+       // changeProfile = root.findViewById(R.id.changeProfile);
+
+
+
 
         FirebaseAuth.getInstance().addAuthStateListener(new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull @NotNull FirebaseAuth firebaseAuth) {
                 userId = firebaseAuth.getCurrentUser().getUid();
-                FirebaseUser user = firebaseAuth.getCurrentUser();
+                firebaseAuth = FirebaseAuth.getInstance();
+                firebaseFirestore = FirebaseFirestore.getInstance();
+                user = firebaseAuth.getCurrentUser();
+                storageReference = FirebaseStorage.getInstance().getReference();
                 displaynamets = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getDisplayName();
-                phonenumberts = firebaseAuth.getCurrentUser().getPhoneNumber();
-                phonenumberts = user.getPhoneNumber();
-                displaynamets = user.getDisplayName();
 
-                phonenumber.setText(phonenumberts);
-                displayname.setText(displaynamets);
+
+                phonenumber.setText(user.getPhoneNumber());
+                displayname.setText(user.getDisplayName());
                 email.setText(user.getEmail());
             }
         });
@@ -72,6 +78,8 @@ public class HomeFragment extends Fragment {
                     startActivity(new Intent(getContext(), Login.class));
                 }
             });
+
+
 
         return root;
 }

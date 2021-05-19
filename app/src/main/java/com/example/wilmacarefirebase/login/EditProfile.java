@@ -63,6 +63,12 @@ public class EditProfile extends AppCompatActivity {
         saveBtn = findViewById(R.id.saveProfileInfo);
 
 
+        saveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 
 

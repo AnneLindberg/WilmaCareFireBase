@@ -1,27 +1,17 @@
 package com.example.wilmacarefirebase.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.wilmacarefirebase.R;
-import com.example.wilmacarefirebase.login.Login;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
-    private EditText messageEditText;
-    private TextView messageTextView;
-    private TextView welcomeMessage;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

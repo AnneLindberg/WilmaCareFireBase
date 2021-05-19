@@ -90,7 +90,7 @@ public class WilmaRepository {
             @Override
             public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
-                   // onFireStoreTaskCompleteResident.residentDataAdded(task.getResult().toObjects(Resident.class));
+//                    onFireStoreTaskCompleteResident.residentDataAdded(task.getResult().toObjects(Resident.class));
                 }
             }
         });
