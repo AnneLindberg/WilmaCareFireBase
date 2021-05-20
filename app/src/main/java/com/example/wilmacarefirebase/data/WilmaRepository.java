@@ -106,6 +106,7 @@ public class WilmaRepository {
             }
         });
     }
+
     public void addPost() {
 
     }
