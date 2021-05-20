@@ -16,11 +16,8 @@ import android.widget.Toast;
 
 import com.example.wilmacarefirebase.R;
 import com.example.wilmacarefirebase.ui.MainActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -31,7 +28,7 @@ import java.util.Map;
 
 public class Register extends AppCompatActivity {
 
-    EditText editTextFullName, editTextEmail, editTextPassword, editTextPhone;
+    EditText mFullName, mEmail, mPassword, mPhone;
     Button mRegisterBtn;
     TextView alreadyRegistered;
     FirebaseAuth firebaseAuth;
@@ -44,10 +41,10 @@ public class Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        editTextFullName = findViewById(R.id.edtextPersonName);
-        editTextEmail = findViewById(R.id.edtextEmail);
-        editTextPassword = findViewById(R.id.edtextPassword);
-        editTextPhone = findViewById(R.id.edtextPhone);
+        mFullName = findViewById(R.id.edtextPersonName);
+        mEmail = findViewById(R.id.edtextEmail);
+        mPassword = findViewById(R.id.edtextPassword);
+        mPhone = findViewById(R.id.edtextPhone);
         mRegisterBtn = findViewById(R.id.btnRegister);
         alreadyRegistered = findViewById(R.id.txtCreateText);
 
@@ -63,28 +60,29 @@ public class Register extends AppCompatActivity {
         }
 
         mRegisterBtn.setOnClickListener(v -> {
-            final String email = editTextEmail.getText().toString().trim();
-            String password = editTextPassword.getText().toString().trim();
-            final String displayName = editTextFullName.getText().toString();
-            final String phoneNumber    = editTextPhone.getText().toString();
+            final String email = mEmail.getText().toString().trim();
+            String password = mPassword.getText().toString().trim();
+            final String fullName = mFullName.getText().toString();
+            final String phone    = mPhone.getText().toString();
 
             if(TextUtils.isEmpty(email)){
-                editTextEmail.setError("Email is Required.");
+                mEmail.setError("Email is Required.");
                 return;
             }
 
             if(TextUtils.isEmpty(password)){
-                editTextPassword.setError("Password is Required.");
+                mPassword.setError("Password is Required.");
                 return;
             }
 
             if(password.length() < 6){
-                editTextPassword.setError("Password Must be more than 6 Characters");
+                mPassword.setError("Password Must be more than 6 Characters");
                 return;
             }
 
 
             progressBar.setVisibility(View.VISIBLE);
+
             //register user in firebase
 
             firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
@@ -106,12 +104,14 @@ public class Register extends AppCompatActivity {
                     });
 
                     Toast.makeText(Register.this,"User created.", Toast.LENGTH_SHORT).show();
+
+
                     userID = firebaseAuth.getCurrentUser().getUid();
                     DocumentReference documentReference = firebaseFirestore.collection("users").document(userID);
                     Map<String, Object> user = new HashMap<>();
-                    user.put("displayname", displayName);
+                    user.put("displayname", fullName);
                     user.put("email", email);
-                    user.put("phonenumber", phoneNumber);
+                    user.put("phone", phone);
                     documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
