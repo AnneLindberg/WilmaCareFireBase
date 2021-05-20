@@ -94,7 +94,7 @@ public class HomeFragment extends Fragment {
         FirebaseAuth.getInstance().addAuthStateListener(new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull @NotNull FirebaseAuth firebaseAuth) {
-                userId = firebaseAuth.getCurrentUser().getUid();
+               // userId = firebaseAuth.getCurrentUser().getUid();
                 firebaseAuth = FirebaseAuth.getInstance();
                 firebaseFirestore = FirebaseFirestore.getInstance();
                 user = firebaseAuth.getCurrentUser();

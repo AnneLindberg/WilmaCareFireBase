@@ -13,7 +13,6 @@
         android:id="@+id/cardView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         app:cardBackgroundColor="#90CDF5"
         app:cardCornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -1,6 +1,5 @@
 WilmaCareApp   
 
-
 An app which is created to make communication between relatives of nursing home residents easier. 
 WilmaCares overall vision is to create a society around those who have created the society we live in now.
 WilmaCare is a platform created to be a platform for the Danish elderly care, a communication and coordination platform.
@@ -23,5 +22,8 @@ Could have -
 A calender function, where staff and relatives can log appointments for the resident. 
 
 Won't have -
-A chat system 
+A chat system. Is not able to uploade photos
+
+Link to video: 
+https://youtu.be/Ek660ZYIcBg
 

@@ -24,10 +24,7 @@ public class AddPostFragment extends AppCompatActivity {
 
     private CollectionReference collectionReference;
     private EditText editTextDescription, editTextUserName, editTextTitle;
-    private ImageView photoView;
     private ImageView buttonAddPost;
-    private String imageId;
-    private DashboardPost newPost;
     FirebaseAuth firebaseAuth;
     FirebaseFirestore firebaseFirestore;
     String userID;
@@ -46,10 +43,6 @@ public class AddPostFragment extends AppCompatActivity {
         editTextTitle = findViewById(R.id.edtTitle);
         editTextUserName = findViewById(R.id.edtwriteusername);
         buttonAddPost = findViewById(R.id.btnSavePost);
-       // photoView = findViewById(R.id.addphoto);
-
-        //fandt eksempel til at oploade billeder online, men har senere glemt hvilken tutorial
-        imageId = UUID.randomUUID().toString() + ".jpg";
 
         collectionReference = FirebaseFirestore.getInstance().collection("dashboardlist");
 
@@ -63,7 +56,6 @@ public class AddPostFragment extends AppCompatActivity {
             post.put("username", username);
             post.put("title", title);
             post.put("description", description);
-            post.put("image", null);
             documentReference.set(post).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
@@ -71,7 +63,6 @@ public class AddPostFragment extends AppCompatActivity {
                 }
             });
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
-            //TODO:: open dashboard fragment instead
         });
     }
 
