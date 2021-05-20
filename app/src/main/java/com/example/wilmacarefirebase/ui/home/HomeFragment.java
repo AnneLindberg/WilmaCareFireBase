@@ -1,23 +1,28 @@
 package com.example.wilmacarefirebase.ui.home;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.wilmacarefirebase.R;
 import com.example.wilmacarefirebase.login.EditProfile;
 import com.example.wilmacarefirebase.login.Login;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -27,11 +32,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
-import java.util.concurrent.Executor;
 
 public class HomeFragment extends Fragment {
 
@@ -40,11 +45,10 @@ public class HomeFragment extends Fragment {
     TextView displayname, email, phonenumber;
     FirebaseAuth firebaseAuth;
     FirebaseFirestore firebaseFirestore;
-    String userId;
-    ImageView btnLogOut, changeProfile;
-    FirebaseUser user;
-    ImageView profileImage;
     StorageReference storageReference;
+    String userId;
+    ImageView btnLogOut, btnChangeProfile, profileImage;
+    FirebaseUser user;
     private String phonenumberts, displaynamets;
 
 
@@ -56,10 +60,12 @@ public class HomeFragment extends Fragment {
         displayname = root.findViewById(R.id.profileName);
         email = root.findViewById(R.id.profileEmail);
         btnLogOut = root.findViewById(R.id.btnLogOut);
-        changeProfile = root.findViewById(R.id.btnChangeProfile);
+        btnChangeProfile = root.findViewById(R.id.btnChangeProfile);
+        profileImage = root.findViewById(R.id.profileImage);
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
+        storageReference = FirebaseStorage.getInstance().getReference();
 
         userId = firebaseAuth.getCurrentUser().getUid();
 
@@ -99,8 +105,73 @@ public class HomeFragment extends Fragment {
             });
 
 
+        btnChangeProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent openGallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(openGallery, 1000);
+                //startActivity(new Intent(getContext(), EditProfile.class));
+            }
+        });
+
+
 
         return root;
 }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == 1000){
+            if(resultCode == Activity.RESULT_OK){
+                Uri imageUri = data.getData();
+                profileImage.setImageURI(imageUri);
+                uploadeImageToFireBase(imageUri);
+            }
+        }
+
+
+
+
+
+    }
+
+    private void uploadeImageToFireBase(Uri imageUri) {
+        StorageReference fileRef = storageReference.child("profile.jpg");
+        fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Log.d("Image", "Image uploaded!");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull @NotNull Exception e) {
+                Log.d("Image", "Image not uploaded!");
+            }
+        });
+
+
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
