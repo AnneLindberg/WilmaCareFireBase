@@ -5,9 +5,7 @@ import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
-import com.example.wilmacarefirebase.data.UserRepository;
 import com.google.firebase.auth.FirebaseUser;
 
 public class HomeViewModel extends AndroidViewModel {
