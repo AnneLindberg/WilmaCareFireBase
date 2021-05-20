@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.wilmacarefirebase.R;
 import com.example.wilmacarefirebase.ui.MainActivity;
@@ -21,7 +23,7 @@ public class AddCalenderPost extends AppCompatActivity {
     private CollectionReference collectionReference;
     private AddCalenderPost viewModel;
     private EditText editTextDescription, editTextTitle, editTextdate;
-    private Button buttonAddCalenderPost;
+    private ImageView buttonAddCalenderPost;
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firebaseFirestore;
     private String userID;

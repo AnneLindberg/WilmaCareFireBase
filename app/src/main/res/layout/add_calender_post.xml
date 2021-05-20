@@ -6,16 +6,17 @@
     android:layout_height="match_parent">
 
 
-    <Button
+    <ImageView
         android:id="@+id/btnSaveCalenderPost"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="71dp"
-        android:text="Gem Afatle"
+        android:layout_width="122dp"
+        android:layout_height="75dp"
+        android:src="@drawable/btn_gem"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edtCalDesc" />
+
+
 
 
     <EditText
@@ -25,7 +26,7 @@
         android:layout_marginBottom="18dp"
         android:ems="10"
         android:gravity="start|top"
-        android:hint="skriv titlen på opslaget her"
+        android:hint="Skriv titlen på opslaget her"
         android:inputType="textShortMessage"
         app:layout_constraintBottom_toTopOf="@+id/edtCalDesc"
         app:layout_constraintEnd_toEndOf="parent"
@@ -39,7 +40,7 @@
         android:layout_marginBottom="14dp"
         android:ems="10"
         android:gravity="start|top"
-        android:hint="Skriv lidt om aftalen her"
+        android:hint="Skriv detaljer om aftalen her"
         android:inputType="textMultiLine"
         app:layout_constraintBottom_toTopOf="@+id/btnSaveCalenderPost"
         app:layout_constraintEnd_toEndOf="parent"

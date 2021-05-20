@@ -7,7 +7,6 @@
     android:background="@drawable/backgroundlight"
     tools:context=".ui.calender.CalenderFragment">
 
-
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnNewCalenderPost"
         android:layout_width="wrap_content"

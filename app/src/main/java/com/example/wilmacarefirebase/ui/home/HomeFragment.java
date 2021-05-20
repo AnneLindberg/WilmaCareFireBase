@@ -33,6 +33,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -60,12 +61,21 @@ public class HomeFragment extends Fragment {
         displayname = root.findViewById(R.id.profileName);
         email = root.findViewById(R.id.profileEmail);
         btnLogOut = root.findViewById(R.id.btnLogOut);
-        btnChangeProfile = root.findViewById(R.id.btnChangeProfile);
+      //  btnChangeProfile = root.findViewById(R.id.btnChangeProfile);
         profileImage = root.findViewById(R.id.profileImage);
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
+
+
+        StorageReference profileRef = storageReference.child("users/" + firebaseAuth.getCurrentUser().getUid() + "/profile.jpeg");
+        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.get().load(uri).into(profileImage);
+            }
+        });
 
         userId = firebaseAuth.getCurrentUser().getUid();
 
@@ -73,11 +83,13 @@ public class HomeFragment extends Fragment {
         documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(DocumentSnapshot value, FirebaseFirestoreException error) {
+
                 displayname.setText(value.getString("displayname"));
                 phonenumber.setText(value.getString("phone"));
                 email.setText(value.getString("email"));
             }
         });
+
 
         FirebaseAuth.getInstance().addAuthStateListener(new FirebaseAuth.AuthStateListener() {
             @Override
@@ -86,7 +98,6 @@ public class HomeFragment extends Fragment {
                 firebaseAuth = FirebaseAuth.getInstance();
                 firebaseFirestore = FirebaseFirestore.getInstance();
                 user = firebaseAuth.getCurrentUser();
-                storageReference = FirebaseStorage.getInstance().getReference();
                 displaynamets = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getDisplayName();
 
                 phonenumber.setText(user.getPhoneNumber());
@@ -105,14 +116,20 @@ public class HomeFragment extends Fragment {
             });
 
 
-        btnChangeProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent openGallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(openGallery, 1000);
-                //startActivity(new Intent(getContext(), EditProfile.class));
-            }
-        });
+//        btnChangeProfile.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(view.getContext(), EditProfile.class);
+//                intent.putExtra("displayname", displayname.getText().toString());
+//                intent.putExtra("phone", phonenumber.getText().toString());
+//                intent.putExtra("email", firebaseAuth.getCurrentUser().getEmail());
+//                startActivity(intent);
+//
+//
+////                Intent openGallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+////                startActivityForResult(openGallery, 1000);
+//            }
+//        });
 
 
 
@@ -125,53 +142,33 @@ public class HomeFragment extends Fragment {
         if(resultCode == 1000){
             if(resultCode == Activity.RESULT_OK){
                 Uri imageUri = data.getData();
-                profileImage.setImageURI(imageUri);
+               // profileImage.setImageURI(imageUri);
+
                 uploadeImageToFireBase(imageUri);
             }
         }
-
-
-
-
-
     }
 
     private void uploadeImageToFireBase(Uri imageUri) {
-        StorageReference fileRef = storageReference.child("profile.jpg");
+        final StorageReference fileRef = storageReference.child("users/" + firebaseAuth.getCurrentUser().getUid() + "/profile.jpeg");
         fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Log.d("Image", "Image uploaded!");
+               fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                   @Override
+                   public void onSuccess(Uri uri) {
+                       Picasso.get().load(uri).into(profileImage);
+                   }
+               });
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull @NotNull Exception e) {
-                Log.d("Image", "Image not uploaded!");
+                Toast.makeText(getActivity(), "Fejl", Toast.LENGTH_SHORT).show();
             }
         });
 
 
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

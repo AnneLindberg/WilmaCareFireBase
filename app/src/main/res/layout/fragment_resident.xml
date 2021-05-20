@@ -11,30 +11,20 @@
         android:id="@+id/imageView6"
         android:layout_width="389dp"
         android:layout_height="0dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginBottom="133dp"
-        android:src="@drawable/contactinfo"
-        app:layout_constraintBottom_toTopOf="@+id/txtContactPersonPhone"
+        android:layout_marginBottom="58dp"
+        android:src="@drawable/contact_person_info"
+        app:layout_constraintBottom_toTopOf="@+id/txtContactPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imageView7"
-        android:layout_width="0dp"
+        android:layout_width="386dp"
         android:layout_height="274dp"
-        android:layout_marginStart="13dp"
-        android:layout_marginLeft="13dp"
         android:layout_marginTop="4dp"
-        android:layout_marginEnd="13dp"
-        android:layout_marginRight="13dp"
-        android:src="@drawable/info"
+        android:src="@drawable/contact_box"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView6" />
 
@@ -42,35 +32,35 @@
         android:id="@+id/txtContactPersonName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="96dp"
-        android:layout_marginLeft="96dp"
-        android:layout_marginBottom="48dp"
+        android:layout_marginStart="89dp"
+        android:layout_marginLeft="89dp"
+        android:layout_marginBottom="51dp"
         android:text="Navn Kontaktperson"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/txtContactPersonPhone"
-        app:layout_constraintStart_toStartOf="@+id/imageView7" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView6" />
 
     <TextView
         android:id="@+id/txtContactPersonPhone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="329dp"
+        android:layout_marginBottom="41dp"
         android:text="Telefon Kontaktperson"
         android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/txtEmailContactPerson"
         app:layout_constraintStart_toStartOf="@+id/txtContactPersonName"
-        app:layout_constraintTop_toBottomOf="@+id/imageView6" />
+        app:layout_constraintTop_toBottomOf="@+id/txtContactPersonName" />
 
     <TextView
         android:id="@+id/txtEmailContactPerson"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginBottom="268dp"
         android:text="Email Kontaktperson"
         android:textSize="16sp"
-        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/txtContactPersonPhone"
         app:layout_constraintTop_toBottomOf="@+id/txtContactPersonPhone" />
 
@@ -81,8 +71,8 @@
         android:src="@drawable/btn_borger"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.951"
+        app:layout_constraintHorizontal_bias="0.859"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView7"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.404" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -25,7 +25,7 @@ public class AddPostFragment extends AppCompatActivity {
     private CollectionReference collectionReference;
     private EditText editTextDescription, editTextUserName, editTextTitle;
     private ImageView photoView;
-    private Button buttonAddPost;
+    private ImageView buttonAddPost;
     private String imageId;
     private DashboardPost newPost;
     FirebaseAuth firebaseAuth;
@@ -46,7 +46,7 @@ public class AddPostFragment extends AppCompatActivity {
         editTextTitle = findViewById(R.id.edtTitle);
         editTextUserName = findViewById(R.id.edtwriteusername);
         buttonAddPost = findViewById(R.id.btnSavePost);
-        photoView = findViewById(R.id.addphoto);
+       // photoView = findViewById(R.id.addphoto);
 
         //fandt eksempel til at oploade billeder online, men har senere glemt hvilken tutorial
         imageId = UUID.randomUUID().toString() + ".jpg";

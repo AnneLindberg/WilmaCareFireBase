@@ -5,55 +5,55 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/backgroundlight"
+    android:orientation="vertical"
     tools:context=".ui.aboutResident.AboutResidentFragment">
+
 
     <ImageView
         android:id="@+id/imageView8"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="24dp"
+        android:layout_width="match_parent"
+        android:layout_height="113dp"
+        android:layout_gravity="center"
         android:src="@drawable/lifetree"
-        app:layout_constraintBottom_toTopOf="@+id/residentName"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.032" />
 
-    <TextView
-        android:id="@+id/residentName"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="403dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginBottom="95dp"
-        android:text="residentname"
-        app:layout_constraintBottom_toTopOf="@+id/cardView2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView8" />
-
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="310dp"
-        app:cardCornerRadius="20dp"
+        android:layout_gravity="center"
+        android:background="@color/white"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/residentName">
+        app:layout_constraintTop_toBottomOf="@+id/imageView8"
+        app:layout_constraintVertical_bias="0.116">
+
+        <TextView
+            android:id="@+id/residentName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="residentname"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="131dp" />
 
         <TextView
             android:id="@+id/residentDescription"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="description  sdfffffffffffresident"
+            android:layout_margin="10dp"
+            android:text="description"
             android:textSize="16sp"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="271dp" />
-    </androidx.cardview.widget.CardView>
+            tools:layout_editor_absoluteX="9dp"
+            tools:layout_editor_absoluteY="238dp" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

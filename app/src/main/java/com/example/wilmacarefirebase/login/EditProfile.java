@@ -7,8 +7,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,7 +23,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,8 +35,8 @@ public class EditProfile extends AppCompatActivity {
     EditText profileFullName,profileEmail,profilePhone;
     ImageView profileImageView;
     Button saveBtn;
-    FirebaseAuth fAuth;
-    FirebaseFirestore fStore;
+    FirebaseAuth firebaseAuth;
+    FirebaseFirestore firebaseFirestore;
     FirebaseUser user;
     StorageReference storageReference;
 
@@ -47,26 +46,61 @@ public class EditProfile extends AppCompatActivity {
         setContentView(R.layout.activity_edit_profile);
 
         Intent data = getIntent();
-        final String fullName = data.getStringExtra("fullName");
+        final String displayname = data.getStringExtra("displayname");
         String email = data.getStringExtra("email");
         String phone = data.getStringExtra("phone");
 
-        fAuth = FirebaseAuth.getInstance();
-        fStore = FirebaseFirestore.getInstance();
-        user = fAuth.getCurrentUser();
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseFirestore = FirebaseFirestore.getInstance();
+
+        user = firebaseAuth.getCurrentUser();
         storageReference = FirebaseStorage.getInstance().getReference();
 
         profileFullName = findViewById(R.id.profileFullName);
         profileEmail = findViewById(R.id.profileEmailAddress);
         profilePhone = findViewById(R.id.profilePhoneNo);
         profileImageView = findViewById(R.id.profileImageView);
+
+
+        profileFullName.setText(displayname);
+        profileEmail.setText(email);
+        profilePhone.setText(phone);
+
         saveBtn = findViewById(R.id.saveProfileInfo);
 
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (profileFullName.getText().toString().isEmpty() || profileEmail.getText().toString().isEmpty() || profilePhone.getText().toString().isEmpty()) {
+                    return;
+                }
 
+                final String email = profileEmail.getText().toString();
+                user.updateEmail(email).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        DocumentReference documentReference = firebaseFirestore.collection("users").document(user.getUid());
+                        Map<String, Object> editUser = new HashMap<>();
+                        editUser.put("email", email);
+                        editUser.put("displayname", profileFullName.getText().toString());
+                        editUser.put("phone", profilePhone.getText().toString());
+                        documentReference.update(editUser).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Toast.makeText(EditProfile.this, "Profil opdateret", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                finish();
+                            }
+                        });
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull @NotNull Exception e) {
+                        Toast.makeText(EditProfile.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                    }
+                });
             }
         });
     }
