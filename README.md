@@ -1,6 +1,6 @@
-#WilmaCareApp   
+WilmaCareApp   
 
-#WilmaCareApp.
+
 An app which is created to make communication between relatives of nursing home residents easier. 
 WilmaCares overall vision is to create a society around those who have created the society we live in now.
 WilmaCare is a platform created to be a platform for the Danish elderly care, a communication and coordination platform.
@@ -10,15 +10,18 @@ Lastly, another important part of the app is the resident page (Three of Life), 
 
 
 
-#MoSCoW requirements 
+MoSCoW requirements 
 Here are the requirements stated from the Moscow method. 
 
-#Must have 
+Must have 
 A Dashboard page, where staff and relatives can post their comments.
-#Should have
+
+Should have
 A page about the resident, including information of the residents contact person. 
-#Could have 
+
+Could have 
 A calender function, where staff and relatives can log appointments for the resident. 
-#Won't have 
+
+Won't have 
 A chat system 
 
